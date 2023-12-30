@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../Utils/AxiosApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,10 +19,18 @@ function Login() {
         try {
 
             if (email && password.length > 5) {
-                const response = await axios.post('/http://localhost:3001/login', {email, password});
+                const data = {
+                    email,
+                    password,
+                };
+                const response = await api.post('http://localhost:3001/login', data);
                 if (response.status === 200) {
+                    const { token, userId } = response.data;
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("userId", userId);
                     navigate('/dashboard');
                 }
+                console.log(response.status);
             } 
         } catch (error) {
             console.error("Erro Login ", error);

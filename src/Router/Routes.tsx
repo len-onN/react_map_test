@@ -6,7 +6,7 @@ function Router() {
     return (
         <Routes>
             <Route path="/" element={ <InitialPage/> } />
-            <Route path="/geolucky" element={ <Geolucky/>} />
+            <Route path="/dashboard" element={ <Geolucky/>} />
         </Routes>
     )
 }
