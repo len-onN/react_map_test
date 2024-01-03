@@ -27,7 +27,7 @@ function Login() {
                 if (response.status === 200) {
                     const { token, userId } = response.data;
                     localStorage.setItem("token", token);
-                    localStorage.setItem("userId", userId);
+                    localStorage.setItem("userId", JSON.stringify(userId));
                     navigate('/dashboard');
                 }
                 console.log(response.status);
@@ -45,7 +45,7 @@ function Login() {
           <label>
             <input type="password" onChange={(e) => handlePasswordChange(e.target.value)} value={password} />
           </label>
-          <button onClick={handleLoginButton}>Login</button>
+          <button onClick={() => handleLoginButton() }>Login</button>
       </div>  
     )
   }
