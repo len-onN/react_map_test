@@ -23,10 +23,10 @@ function Geolucky() {
   const [lng, setLng] = useState<number | null>(0);
   // const isPositionSet = !position ? false : true;
 
-  const toggleLockMarker = () => {
-    // setLockMarker(!lockMarker);
-    // setLockMarker(true); 
-  };
+  // const toggleLockMarker = () => {
+  //   // setLockMarker(!lockMarker);
+  //   // setLockMarker(true); 
+  // };
   useEffect(() => {
     async function apiGet() {
       const userId = localStorage.getItem('userId');
@@ -41,7 +41,7 @@ function Geolucky() {
         setLng(response.data.lng);
         setLockMarker(true);
       } else if (!response.data) {
-        console.log('sem um ponto escolhido para o próximo sorteio')
+        console.log('Escolha um local no mapa para concorrer ao sorteio');
       }
     }
     apiGet();
@@ -74,10 +74,10 @@ function Geolucky() {
         </MapContainer>
         <button disabled={ lockMarker } onClick={() => {
           savePoint();
-          toggleLockMarker();
+          // toggleLockMarker();
           // savePoint();
           }}>
-          {lockMarker ? 'Já escolheu' : 'Escolher Lugar'}
+          {lockMarker ? 'Coordenadas escolhidas' : 'Escolher lugar'}
         </button>
         <p style={{margin: "0px"}}>Atenção: apenas uma escolha por sorteio</p>
       </div>
