@@ -50,10 +50,11 @@ function Signin() {
       console.log(response.status);
       if (response.status === 201) {
         const dbResponse = await api.post('http://localhost:3001/login', data);
+        console.log("DB RESPONSE", dbResponse);
           if (dbResponse.status === 200) {
             const { token, userId } = dbResponse.data;
             localStorage.setItem("token", token);
-            localStorage.setItem("userId", userId);
+            localStorage.setItem("userId", JSON.stringify(userId));
             navigate('/dashboard');
           }
       }

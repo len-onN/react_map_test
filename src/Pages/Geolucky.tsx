@@ -1,40 +1,41 @@
-// src/pages/home/index.tsx
-
-// function Geolucky() {
-//     return (
-//       <h1>Geolucky</h1>
-//     )
-//   }
-  
-//   export default Geolucky;
-
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { LatLng } from 'leaflet';
+import ConfirmEmail from '../Components/ConfirmEmail';
 import LocationMarker from '../Components/LocationMarker';
 import api from '../Utils/AxiosApi';
 import '../App.css';
 
+
 function Geolucky() {
   const [lockMarker, setLockMarker] = useState(false);
-  const [uId, setUid] = useState<string | null>(null);
+  const [uId, setUid] = useState<number | null>(null);
   const [position, setPosition] = useState<LatLng | null>(null);
   const [lat, setLat] = useState<number | null>(0);
   const [lng, setLng] = useState<number | null>(0);
-  // const isPositionSet = !position ? false : true;
-
-  // const toggleLockMarker = () => {
-  //   // setLockMarker(!lockMarker);
-  //   // setLockMarker(true); 
-  // };
+  const [tokenState, setTokenState] = useState<string>("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  
   useEffect(() => {
+    const userIdP = JSON.parse(localStorage.getItem('userId') as string);
+    console.log(userIdP, typeof userIdP, "iogogogo");
+    if (userIdP !== null) {
+      const uid = parseInt(userIdP);
+      setUid(uid);
+    }
+    console.log("uid:", uId);
+    async function checkIsUserConfirmed() {
+      const response = await api.get(`http://localhost:3001/user/${userIdP}`);
+      const { data } = response;
+      console.log("user encontrado:", data);
+      setTokenState(data.token);
+      console.log(data.user.isConfirmed);
+      setIsConfirmed(data.user.isConfirmed);
+      // console.log(response.status);
+    };
+    checkIsUserConfirmed();
     async function apiGet() {
-      const userId = localStorage.getItem('userId');
-      if (typeof userId === 'string') {
-        setUid(userId)
-        console.log(uId);
-      }
-      const response = await api.post('http://localhost:3001/point/check', { userId });
+      const response = await api.post('http://localhost:3001/point/check', { userId: userIdP });
       if(response.data) {
         console.log(response.data);
         setLat(response.data.lat);
@@ -56,7 +57,7 @@ function Geolucky() {
   };
 
 
-  return (
+  return isConfirmed ? (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div>
         <MapContainer center={[lat || 0, lng || 0]} zoom={0.9} scrollWheelZoom={true}>
@@ -82,7 +83,7 @@ function Geolucky() {
         <p style={{margin: "0px"}}>Atenção: apenas uma escolha por sorteio</p>
       </div>
     </div>
-  );
+  ) : (<ConfirmEmail token={tokenState} />)
 }
 
 export default Geolucky;
