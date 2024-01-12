@@ -6,7 +6,6 @@ import LocationMarker from '../Components/LocationMarker';
 import api from '../Utils/AxiosApi';
 import '../App.css';
 
-
 function Geolucky() {
   const [lockMarker, setLockMarker] = useState(false);
   const [uId, setUid] = useState<number | null>(null);
@@ -18,26 +17,20 @@ function Geolucky() {
   
   useEffect(() => {
     const userIdP = JSON.parse(localStorage.getItem('userId') as string);
-    console.log(userIdP, typeof userIdP, "iogogogo");
     if (userIdP !== null) {
       const uid = parseInt(userIdP);
       setUid(uid);
-    }
-    console.log("uid:", uId);
+    };
     async function checkIsUserConfirmed() {
-      const response = await api.get(`http://localhost:3001/user/${userIdP}`);
+      const response = await api.get(`http://localhost:3001/token/${userIdP}`);
       const { data } = response;
-      console.log("user encontrado:", data);
       setTokenState(data.token);
-      console.log(data.user.isConfirmed);
       setIsConfirmed(data.user.isConfirmed);
-      // console.log(response.status);
     };
     checkIsUserConfirmed();
     async function apiGet() {
       const response = await api.post('http://localhost:3001/point/check', { userId: userIdP });
       if(response.data) {
-        console.log(response.data);
         setLat(response.data.lat);
         setLng(response.data.lng);
         setLockMarker(true);
@@ -51,8 +44,8 @@ function Geolucky() {
   const savePoint = async () => {
     try {
       setLockMarker(true);
-      const response = await api.post('http://localhost:3001/point', {lat: position?.lat, lng: position?.lng, userId: uId });
-      console.log(response);
+      await api.post('http://localhost:3001/point', {lat: position?.lat, lng: position?.lng, userId: uId });
+      // console.log(response);
     } catch (err) { console.log(err); }
   };
 
@@ -75,8 +68,6 @@ function Geolucky() {
         </MapContainer>
         <button disabled={ lockMarker } onClick={() => {
           savePoint();
-          // toggleLockMarker();
-          // savePoint();
           }}>
           {lockMarker ? 'Coordenadas escolhidas' : 'Escolher lugar'}
         </button>

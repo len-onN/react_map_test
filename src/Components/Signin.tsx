@@ -48,11 +48,13 @@ function Signin() {
     const data1 = { ...data, fullName };
       const response = await api.post('http://localhost:3001/user', data1);
       console.log(response.status);
+      console.log(response.data);
       if (response.status === 201) {
         const dbResponse = await api.post('http://localhost:3001/login', data);
         console.log("DB RESPONSE", dbResponse);
           if (dbResponse.status === 200) {
             const { token, userId } = dbResponse.data;
+            console.log(dbResponse);
             localStorage.setItem("token", token);
             localStorage.setItem("userId", JSON.stringify(userId));
             navigate('/dashboard');

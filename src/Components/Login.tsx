@@ -24,6 +24,7 @@ function Login() {
                     password,
                 };
                 const response = await api.post('http://localhost:3001/login', data);
+                console.log(response);
                 if (response.status === 200) {
                     const { token, userId } = response.data;
                     localStorage.setItem("token", token);
