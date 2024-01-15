@@ -24,6 +24,7 @@ function Geolucky() {
     async function checkIsUserConfirmed() {
       const response = await api.get(`http://localhost:3001/token/${userIdP}`);
       const { data } = response;
+      console.log(response);
       setTokenState(data.token);
       setIsConfirmed(data.user.isConfirmed);
     };

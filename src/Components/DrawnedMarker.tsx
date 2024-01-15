@@ -3,26 +3,24 @@ import { Marker, Popup } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import L from 'leaflet';
 
-const iconCompeting = require('../Icon/location-sign-gray.svg').default;
-const iconWinner = require('../Icon/location-sign-dark-gray .svg').default;
+const iconPath = require('../Icon/location-sign-svgrepo-com.svg').default;
 
 
+const customIcon = new L.Icon({
+  iconUrl: iconPath,
+  iconSize: [36, 36],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32]
+});
 
 type MarkerProps = {
   pointLat: number | null;
   pointLng: number | null;
-  isWinner: boolean;
 };
 
-function MarkerPoint({ pointLat, pointLng, isWinner }: MarkerProps) {
+function MarkerPoint({ pointLat, pointLng }: MarkerProps) {
   const [position, setPosition] = useState<LatLng | null>(null);
   const [locationName, setLocationName] = useState<string | null>(null);
-  const [icon, setIcon] = useState<L.Icon>(new L.Icon({
-      iconUrl: '',
-      iconSize: [36, 36],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32]
-  }))
 
   const fetchData = async (lat: number, lng: number) => {
     const latLng = new LatLng(lat, lng);
@@ -59,22 +57,14 @@ function MarkerPoint({ pointLat, pointLng, isWinner }: MarkerProps) {
   };
 
   useEffect(() => {
-    const iconPath = isWinner ? iconWinner : iconCompeting;
-    const customIcon = new L.Icon({
-      iconUrl: iconPath,
-      iconSize: [36, 36],
-      iconAnchor: [16, 32],
-      popupAnchor: [0, -32]
-    });
-    setIcon(customIcon);
     if (pointLat && pointLng) {
       console.log(process.env.PUBLIC_URL)
       fetchData(pointLat, pointLng);
     }
-  }, [pointLat, pointLng, isWinner]);
+  }, [pointLat, pointLng]);
 
   return position === null ? null : (
-    <Marker position={position} icon={icon}>
+    <Marker position={position} icon={customIcon}>
       <Popup>{locationName}</Popup>
     </Marker>
   );

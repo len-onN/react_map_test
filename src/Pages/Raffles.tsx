@@ -36,7 +36,7 @@ function Raffles() {
     useEffect(() => {
         async function getRaffles(){
             const response = await api.get('http://localhost:3001/raffle');
-            console.log(response.data);
+            // console.log(response.data);
             setRaffles(response.data)
         };
         getRaffles();

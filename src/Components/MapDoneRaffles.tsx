@@ -5,6 +5,8 @@ import LocationMarker from '../Components/LocationMarker';
 import api from '../Utils/AxiosApi';
 import '../App.css';
 import MarkerPoint from './MarkerPoint';
+import DrawnedMarker from './DrawnedMarker';
+
 
 type point = {
     lat: number,
@@ -26,6 +28,10 @@ type prop = {
 }
 
 function MapDoneRaffles({ raffle }: prop) {
+  useEffect(() => {
+    console.log("lat: ", raffle.drawnLat, "lng: ", raffle.drawnLng);
+    console.log(typeof raffle.drawnLat, typeof raffle.drawnLng);
+  })
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <MapContainer center={[0, 0]} zoom={0.9} scrollWheelZoom={true}>
@@ -35,14 +41,20 @@ function MapDoneRaffles({ raffle }: prop) {
         />
         {
           raffle.competingPoints && raffle.competingPoints.map((point: point) => {
+            const isWinnerPoint = point.id === raffle.winnerPointId;
             return (
-                <MarkerPoint
-                  pointLat={point.lat}
-                  pointLng={point.lng}
-                />
-            )
-          })
-        }
+              <MarkerPoint
+              pointLat={point.lat}
+              pointLng={point.lng}
+              isWinner={isWinnerPoint}
+              />
+              )
+            })
+          }
+          <DrawnedMarker
+            pointLat={raffle.drawnLat}
+            pointLng={raffle.drawnLng}
+          />
       </MapContainer>
     </div>
   );
