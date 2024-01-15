@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { LatLng } from 'leaflet';
+import { LatLng, LatLngBoundsExpression } from 'leaflet';
 import LocationMarker from '../Components/LocationMarker';
 import api from '../Utils/AxiosApi';
 import '../App.css';
@@ -32,9 +32,14 @@ function MapDoneRaffles({ raffle }: prop) {
     console.log("lat: ", raffle.drawnLat, "lng: ", raffle.drawnLng);
     console.log(typeof raffle.drawnLat, typeof raffle.drawnLng);
   })
+  const maxBounds: LatLngBoundsExpression = [
+    [90, -180], // Nordeste
+    [-90, 180], // Sudoeste
+  ];
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <MapContainer center={[0, 0]} zoom={0.9} scrollWheelZoom={true}>
+    <div>
+      <MapContainer center={[0, 0]} zoom={0.9} scrollWheelZoom={true} maxBounds={maxBounds}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -42,10 +42,10 @@ function Raffles() {
         getRaffles();
     }, []);
     return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={{ display: 'block', position: 'relative', left: '50vh' }}>
       { raffles && raffles.map((raffle: raffle) => {
         return (
-          <div key={raffle.id} >
+          <div key={raffle.id} style={{ display: 'flex', flexDirection: "row"}} >
               <MapDoneRaffles raffle={raffle}/>
           </div>
         )
