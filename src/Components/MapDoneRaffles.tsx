@@ -21,6 +21,8 @@ type raffle = {
     drawnLng: number,
     id: number,
     competingPoints: point[],
+    drawnStart: Date,
+    drawnEnd: Date,
 }
 
 type prop = {
@@ -39,6 +41,9 @@ function MapDoneRaffles({ raffle }: prop) {
 
   return (
     <div>
+      <h2>Resultado para o periodo entre:</h2>
+      <h3>{ `Inicio: ${raffle.drawnStart}`}</h3>
+      <h3>{ `Fim: ${raffle.drawnEnd}`}</h3>
       <MapContainer center={[0, 0]} zoom={0.9} scrollWheelZoom={true} maxBounds={maxBounds}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
