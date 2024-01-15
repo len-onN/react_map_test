@@ -42,6 +42,15 @@ function Raffles() {
         getRaffles();
     }, []);
     return (
+      <div style={{display: 'flex'}}>
+      <div style={{position: 'fixed', left: '5vh'}}>
+        <p>Ponto sorteado:</p>
+        <div style={{ width: '5vh', height: '5vh', backgroundColor: 'rgb(155, 40, 0)' }} />
+        <p>Ponto vencedor:</p>
+        <div style={{ width: '5vh', height: '5vh', backgroundColor: 'rgb(44, 120, 55)' }}/>
+        <p>Pontos competidos:</p>
+        <div style={{ width: '5vh', height: '5vh', backgroundColor: 'rgb(150, 210, 120)' }}/>
+      </div>
     <div style={{ display: 'block', position: 'relative', left: '50vh' }}>
       { raffles && raffles.map((raffle: raffle) => {
         return (
@@ -50,6 +59,7 @@ function Raffles() {
           </div>
         )
       })}
+    </div>
     </div>
   );
 }
