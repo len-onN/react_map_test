@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { LatLng, LatLngBoundsExpression } from 'leaflet';
-import LocationMarker from '../Components/LocationMarker';
-import api from '../Utils/AxiosApi';
+import { LatLngBoundsExpression } from 'leaflet';
+// import api from '../Utils/AxiosApi';
 import '../App.css';
 import MarkerPoint from './MarkerPoint';
 import DrawnedMarker from './DrawnedMarker';
+import InBetweenDates from './InBetweenDates';
 
 
 type point = {
@@ -13,9 +12,9 @@ type point = {
     lng: number,
     id: number,
     userId: number,
-}
+};
 
-type raffle = {
+export type raffle = {
     winnerPointId: number,
     drawnLat: number,
     drawnLng: number,
@@ -23,27 +22,20 @@ type raffle = {
     competingPoints: point[],
     drawnStart: Date,
     drawnEnd: Date,
-}
+};
 
 type prop = {
     raffle: raffle,
-}
+};
 
 function MapDoneRaffles({ raffle }: prop) {
-  useEffect(() => {
-    console.log("lat: ", raffle.drawnLat, "lng: ", raffle.drawnLng);
-    console.log(typeof raffle.drawnLat, typeof raffle.drawnLng);
-  })
   const maxBounds: LatLngBoundsExpression = [
-    [90, -180], // Nordeste
-    [-90, 180], // Sudoeste
+    [90, -180],
+    [-90, 180],
   ];
-
   return (
     <div>
-      <h2>Resultado para o periodo entre:</h2>
-      <h3>{ `Inicio: ${raffle.drawnStart}`}</h3>
-      <h3>{ `Fim: ${raffle.drawnEnd}`}</h3>
+      <InBetweenDates raffle={raffle} />
       <MapContainer center={[0, 0]} zoom={0.9} scrollWheelZoom={true} maxBounds={maxBounds}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
