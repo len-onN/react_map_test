@@ -12,3 +12,5 @@
 - Estilizar
 ### Página Raffles:
 #### Lista os mapas dos sorteios passados, com todos os pontos que concorreram ao sorteio, para cada mapa mostra todos os pontos que concorreram, o ponto sorteado e o ponto vencedor (cada ponto é distinguido pela cor, de acordo com a tabela de referencia)
+#### Próximos passos:
+- Estilizar
