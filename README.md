@@ -1,4 +1,7 @@
 # Geolucky - Front-end:
+### Rodando a aplicação:
+- Clone o repositório e siga o passo-a-passo para rodar o back-end: ```https://github.com/len-onN/geolucky-back-end```
+- Clone o repositório atual, entre no diretório raiz pelo bash, rode o npm install, então npm start, e acesse ```http://localhost:3000/```
 ### Tools: axios, leaflet, react-leaflet
 ### Página Inicial
 #### Por padrão, carrega o campo para login. Pode alterar para o campo de cadastro caso o botão "Cadastro" seja clicado. Uma vez clicado, carrega o campo de cadastro e muda o botão "Cadastro" para "Login".
