@@ -1,6 +1,5 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { LatLngBoundsExpression } from 'leaflet';
-// import api from '../Utils/AxiosApi';
 import '../App.css';
 import MarkerPoint from './MarkerPoint';
 import DrawnedMarker from './DrawnedMarker';
@@ -34,7 +33,7 @@ function MapDoneRaffles({ raffle }: prop) {
     [-90, 180],
   ];
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center'}}>
       <InBetweenDates raffle={raffle} />
       <MapContainer center={[0, 0]} zoom={0.9} scrollWheelZoom={true} maxBounds={maxBounds}>
         <TileLayer
